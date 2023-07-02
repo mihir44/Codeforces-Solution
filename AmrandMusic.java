@@ -1,5 +1,4 @@
 package CodeForces_Solution;
-
 import java.util.*;
 import java.io.*;
 
@@ -73,36 +72,41 @@ public class AmrandMusic {
             FastWriter out = new FastWriter();
             int n = in.nextInt();
             int k = in.nextInt();
-            int arr[] = new int[n];
-            for(int i=0;i<n;i++){
-                arr[i] =in.nextInt();
+            int[] nums = new int[n];
+            int[] arr = new int[n];
+            for(int i = 0; i<n; i++){
+                nums[i] = in.nextInt();
+                arr[i] = nums[i];
             }
-            int a[] = arr.clone();
-            Arrays.sort(a);
-            ArrayList<Integer> ans = new ArrayList<Integer>();
-            //boolean vis[] = new int[n];
-            for(int x : a){
-                if(k < x)
-                    break;
-                else
-                    k -= x;
 
-                for(int i=0;i<n;i++){
-                    if(arr[i] == x){
-                        ans.add(i+1);
-                        arr[i] = -1;
-                        break;
-                    }
+            Arrays.sort(nums);
+            int count = 0;
+            long sum = 0;
+            ArrayList<Integer> res = new ArrayList<>();
+            for(int i = 0; i<n; i++){
+                sum += nums[i];
+                if(sum>k){
+                    break;
                 }
-                out.println(ans.size());
-                for(int x : ans){
-                    out.print(x+" ");
-                }
-                out.println();
+                res.add(nums[i]);
+                count++;
             }
+            out.println(count);
+            for(int i = 0; i<res.size(); i++){
+                out.print(getIndex(res.get(i), arr) + " ");
+            }
+            out.close();
         } catch (Exception e) {
             return;
         }
-
+    }
+    static int getIndex(int t, int[]arr){
+        for(int i = 0; i<arr.length; i++){
+            if(arr[i] == t){
+                arr[i] = -1;
+                return i+1;
+            }
+        }
+        return -1;
     }
 }
